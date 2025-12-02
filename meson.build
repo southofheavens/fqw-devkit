@@ -1,4 +1,8 @@
-project('devkit', 'cpp')
+project('devkit', 'cpp',
+  default_options: [
+    'cpp_std=c++17'
+  ]
+)
 
 cpp = meson.get_compiler('cpp')
 
