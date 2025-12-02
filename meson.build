@@ -9,6 +9,7 @@ sources = files('lib/Tokens.cpp')
 
 devkit_lib = shared_library('devkit', sources,
   include_directories: inc,
+  build_by_default: true,
   dependencies: [ssl_dep] 
 )
 
