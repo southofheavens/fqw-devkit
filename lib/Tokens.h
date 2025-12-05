@@ -4,7 +4,7 @@
 #include <string>
 #include <chrono>
 
-namespace Devkit::Tokens
+namespace FQW::Devkit::Tokens
 {
 
 /**
@@ -43,6 +43,6 @@ struct Payload
  */
 Payload extractPayload(const std::string& token);
 
-} // namespace Devkit::Tokens
+} // namespace FQW::Devkit::Tokens
 
 #endif // __TOKENS_H__

@@ -8,16 +8,26 @@ cpp = meson.get_compiler('cpp')
 
 ssl_dep = dependency('openssl', required: true) 
 
+poco_foundation = cpp.find_library('PocoFoundation', required: true)
+poco_json = cpp.find_library('PocoJSON', required: true)
+poco_jwt = cpp.find_library('PocoJWT', required: true)
+
 inc = include_directories('lib')
 sources = files('lib/Tokens.cpp')
 
+all_deps = [ssl_dep,
+  poco_foundation,
+  poco_json,
+  poco_jwt
+]
+
 devkit_lib = shared_library('devkit', sources,
   include_directories: inc,
-  dependencies: [ssl_dep] 
+  dependencies: all_deps 
 )
 
 devkit_dep = declare_dependency(
   include_directories: inc,
   link_with: devkit_lib,
-  dependencies: [ssl_dep] 
+  dependencies: all_deps
 )

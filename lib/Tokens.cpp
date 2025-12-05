@@ -1,30 +1,34 @@
 #include <Tokens.h>
 
-#include <jwt-cpp/jwt.h>
+#include <Poco/JWT/Token.h>
+#include <Poco/JWT/Signer.h>
+#include <Poco/JSON/Object.h>
 
-namespace Devkit::Tokens
+namespace FQW::Devkit::Tokens
 {
 
 namespace
 {
 
-    const std::string key_ = "secret_key";
+const std::string key_ = "secret_key";
 
-    bool verifyAccessToken(const std::string& token) noexcept
+bool verifyAccessToken(const std::string& token) noexcept
+{
+    try
     {
-        try
-        {
-            auto decoded = jwt::decode(token);
-            auto verifier = jwt::verify()
-                .allow_algorithm(jwt::algorithm::hs256{key_});
-            
-            verifier.verify(decoded);
-            return true;
-        }
-        catch (const std::exception& e) {
-            return false;
-        }
+        Poco::JWT::Signer signer(key_);
+        
+        Poco::JWT::Token decoded = signer.verify(token);
+
+        Poco::Timestamp expires = decoded.getExpiration();
+        Poco::Timestamp now;
+        
+        return expires > now;
     }
+    catch (const std::exception& e) {
+        return false;
+    }
+}
 
 } // namespace
 
@@ -42,23 +46,35 @@ bool isRefreshTokenValid(const std::string& hashed_token /*, подключен�
 
 
 
-Payload extractPayload(const std::string& token) 
+Payload extractPayload(const std::string& token)
 {
     try
     {
-        auto decoded = jwt::decode(token);
-        
+        const Poco::JWT::Token decoded(token);
+
         Payload p;
-        p.sub = std::stoull(decoded.get_subject());
-        p.role = decoded.get_payload_claim("role").as_string();
-        p.exp = std::chrono::duration_cast<std::chrono::seconds>(decoded.get_expires_at().time_since_epoch());
+
+        // sub
+        p.sub = std::stoull(decoded.getSubject());
+
+        // role
+        const Poco::JSON::Object& payload = decoded.payload();
+        if (payload.has("role")) {
+            p.role = payload.getValue<std::string>("role");
+        }
+        else {
+            throw std::runtime_error("Missing 'role' field");
+        }
+
+        // exp
+        Poco::Timestamp exp = decoded.getExpiration();
+        p.exp = std::chrono::seconds(exp.epochTime());
 
         return p;
     }
-    catch (const std::exception&) {
+    catch (const std::exception& e) {
         throw std::runtime_error("Invalid token received");
     }
 }
 
-
-} // namespace Devkit::Tokens
+} // namespace FQW::Devkit::Tokens
