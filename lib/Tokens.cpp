@@ -39,13 +39,6 @@ bool isAccessTokenValid(const std::string& token) noexcept
     }
 }
 
-bool isRefreshTokenValid(const std::string& hashed_token /*, подключение_к_бд  */) noexcept
-{
-
-}
-
-
-
 Payload extractPayload(const std::string& token)
 {
     try
@@ -78,3 +71,4 @@ Payload extractPayload(const std::string& token)
 }
 
 } // namespace FQW::Devkit::Tokens
+

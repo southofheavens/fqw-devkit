@@ -16,16 +16,6 @@ namespace FQW::Devkit::Tokens
 bool isAccessTokenValid(const std::string& token) noexcept;
 
 /**
- * @brief Проверяет является ли refresh токен валидным
- * @note Токен является валидным в том случае, если он найден в БД и он не просрочен
- * @param token Токен
- * @return true, если токен валидный, в противном случае false
- */
-bool isRefreshTokenValid(const std::string& token /*, подключение_к_бд  */) noexcept;
-
-
-
-/**
  * @brief Полезная нагрузка access токена
  */
 struct Payload 
@@ -46,3 +36,4 @@ Payload extractPayload(const std::string& token);
 } // namespace FQW::Devkit::Tokens
 
 #endif // __TOKENS_H__
+
