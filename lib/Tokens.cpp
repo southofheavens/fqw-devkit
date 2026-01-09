@@ -10,13 +10,15 @@ namespace FQW::Devkit::Tokens
 namespace
 {
 
-const std::string key_ = "secret_key";
+const std::string key = "secret_key";
 
-bool verifyAccessToken(const std::string& token) noexcept
+} // namespace
+
+bool isAccessTokenValid(const std::string& token) noexcept
 {
     try
     {
-        Poco::JWT::Signer signer(key_);
+        Poco::JWT::Signer signer(key);
         
         Poco::JWT::Token decoded = signer.verify(token);
 
@@ -26,15 +28,6 @@ bool verifyAccessToken(const std::string& token) noexcept
         return expires > now;
     }
     catch (const std::exception& e) {
-        return false;
-    }
-}
-
-} // namespace
-
-bool isAccessTokenValid(const std::string& token) noexcept
-{
-    if (not verifyAccessToken(token)) {
         return false;
     }
 }
