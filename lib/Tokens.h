@@ -4,6 +4,8 @@
 #include <string>
 #include <chrono>
 
+#include <Poco/Net/HTTPServerRequest.h>
+
 namespace FQW::Devkit::Tokens
 {
 
@@ -32,6 +34,15 @@ struct Payload
  * @return Полезная нагрузка
  */
 Payload extractPayload(const std::string& token);
+
+// Извлекает Bearer access-токен из запроса
+// Функция ответственна за обработку ошибок при извлечении токена
+// 
+// Если в запросе отсутствует заголовок Authorization 
+// или тип токена не Bearer 
+// или токен невалидный (неверная подпись || просрочен),
+// то будет выброшено исключение FQWException
+std::string extractTokenFromRequest(Poco::Net::HTTPServerRequest & request);
 
 } // namespace FQW::Devkit::Tokens
 
