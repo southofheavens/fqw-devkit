@@ -11,6 +11,7 @@ ssl_dep = dependency('openssl', required: true)
 poco_foundation = cpp.find_library('PocoFoundation', required: true)
 poco_json = cpp.find_library('PocoJSON', required: true)
 poco_jwt = cpp.find_library('PocoJWT', required: true)
+poco_net = cpp.find_library('PocoNet', required: true)
 
 inc = include_directories('lib')
 sources = files(
@@ -22,7 +23,8 @@ all_deps = [
   ssl_dep,
   poco_foundation,
   poco_json,
-  poco_jwt
+  poco_jwt,
+  poco_net
 ]
 
 devkit_lib = shared_library('devkit', sources,

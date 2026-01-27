@@ -4,7 +4,7 @@
 #include <Poco/JWT/Signer.h>
 #include <Poco/JSON/Object.h>
 
-#include <fqw-devkit/lib/General.h>
+#include <General.h>
 
 namespace FQW::Devkit::Tokens
 {
