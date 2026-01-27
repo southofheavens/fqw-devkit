@@ -1,6 +1,6 @@
 project('fqw-devkit', 'cpp',
   default_options: [
-    'cpp_std=c++17'
+    'cpp_std=c++20'
   ]
 )
 
@@ -13,9 +13,13 @@ poco_json = cpp.find_library('PocoJSON', required: true)
 poco_jwt = cpp.find_library('PocoJWT', required: true)
 
 inc = include_directories('lib')
-sources = files('lib/Tokens.cpp')
+sources = files(
+  'lib/Tokens.cpp',
+  'lib/General.cpp'
+)
 
-all_deps = [ssl_dep,
+all_deps = [
+  ssl_dep,
   poco_foundation,
   poco_json,
   poco_jwt
