@@ -15,8 +15,8 @@ poco_net = cpp.find_library('PocoNet', required: true)
 
 inc = include_directories('lib')
 sources = files(
-  'lib/Tokens.cpp',
-  'lib/General.cpp'
+  'lib/fqw/devkit/Tokens.cpp',
+  'lib/fqw/devkit/General.cpp'
 )
 
 all_deps = [
