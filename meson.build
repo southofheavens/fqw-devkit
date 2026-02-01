@@ -13,7 +13,7 @@ poco_json = cpp.find_library('PocoJSON', required: true)
 poco_jwt = cpp.find_library('PocoJWT', required: true)
 poco_net = cpp.find_library('PocoNet', required: true)
 
-inc = include_directories('lib')
+inc = include_directories('lib', 'lib/fqw/devkit')
 sources = files(
   'lib/fqw/devkit/Tokens.cpp',
   'lib/fqw/devkit/General.cpp'
