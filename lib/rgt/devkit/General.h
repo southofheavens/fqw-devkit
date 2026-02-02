@@ -7,23 +7,23 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerResponse.h>
 
-namespace FQW::Devkit
+namespace RGT::Devkit
 {
 
 /**
  * В библиотеке Poco у методов и функций отсутствует квалификатор noexcept, поэтому очень тяжело
  * отследить самому выбрасывает ли функция исключения или нет. Для перестраховки перехватывается
- * два типа исключений: FQWException - исключение выбрасывается для предусмотренных ошибок (например, 
+ * два типа исключений: RGTException - исключение выбрасывается для предусмотренных ошибок (например, 
  * от пользователя ожидается логин и пароль в теле json, а что-то из этого отсутствует) и ... для 
- * непредусмотренных исключений, которые могут вылететь из "недр" других функций. Конструктор FQWException 
+ * непредусмотренных исключений, которые могут вылететь из "недр" других функций. Конструктор RGTException 
  * принимает std::string errorMessage - сообщение об ошибке и Poco::Net::HTTPResponse::HTTPStatus - код
  * http-ответа, эти данные будут отправлены клиенту. Если исключение перехватит блок catch (...),
  * то клиент получит код 500 - HTTP_INTERNAL_SERVER_ERROR и сообщение "Internal server error."
  */
-class FQWException : public std::exception 
+class RGTException : public std::exception 
 {
 public:
-    FQWException(const std::string & errorMessage, Poco::Net::HTTPResponse::HTTPStatus httpStatus) 
+    RGTException(const std::string & errorMessage, Poco::Net::HTTPResponse::HTTPStatus httpStatus) 
         : errorMessage_{errorMessage}, httpStatus_{httpStatus} {}
 
     const char * what() const noexcept final 
@@ -45,6 +45,6 @@ private:
 void sendJsonResponse(Poco::Net::HTTPServerResponse & res,
     const std::string & status, const std::string & message);
 
-} // namespace FQW::Devkit
+} // namespace RGT::Devkit
 
 #endif // __GENERAL_H__

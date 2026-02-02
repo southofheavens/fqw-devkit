@@ -1,8 +1,8 @@
-#include <General.h>
+#include <rgt/devkit/General.h>
 
 #include <Poco/JSON/Object.h>
 
-namespace FQW::Devkit
+namespace RGT::Devkit
 {
 
 void sendJsonResponse(Poco::Net::HTTPServerResponse& res,
@@ -16,4 +16,4 @@ void sendJsonResponse(Poco::Net::HTTPServerResponse& res,
     json.stringify(out);
 }
 
-} // namespace FQW::Devkit
+} // namespace RGT::Devkit

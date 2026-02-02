@@ -1,12 +1,11 @@
-#include <Tokens.h>
+#include <rgt/devkit/Tokens.h>
+#include <rgt/devkit/General.h>
 
 #include <Poco/JWT/Token.h>
 #include <Poco/JWT/Signer.h>
 #include <Poco/JSON/Object.h>
 
-#include <General.h>
-
-namespace FQW::Devkit::Tokens
+namespace RGT::Devkit::Tokens
 {
 
 namespace
@@ -95,26 +94,26 @@ Payload extractPayload(const std::string& token)
 std::string extractTokenFromRequest(Poco::Net::HTTPServerRequest & request)
 {
     if (not request.has("Authorization")) {
-        throw FQW::Devkit::FQWException("Unauthorized", Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED);        
+        throw RGT::Devkit::RGTException("Unauthorized", Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED);        
     }
 
     std::vector<std::string> tokenInfo = split(request.get("Authorization"));
 
     if (tokenInfo.size() != 2) {
-        throw FQW::Devkit::FQWException("Authorization header must have 2 words: 'Bearer' and the token itself", 
+        throw RGT::Devkit::RGTException("Authorization header must have 2 words: 'Bearer' and the token itself", 
             Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
     }
     if (tokenInfo[0] != "Bearer") {
-        throw FQW::Devkit::FQWException("Expected 'Bearer' authorization token", 
+        throw RGT::Devkit::RGTException("Expected 'Bearer' authorization token", 
             Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
     }
-    if (not FQW::Devkit::Tokens::isAccessTokenValid(tokenInfo[1])) {
-        throw FQW::Devkit::FQWException("Invalid access token", 
+    if (not RGT::Devkit::Tokens::isAccessTokenValid(tokenInfo[1])) {
+        throw RGT::Devkit::RGTException("Invalid access token", 
             Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED);
     }
 
     return tokenInfo[1];
 }
 
-} // namespace FQW::Devkit::Tokens
+} // namespace RGT::Devkit::Tokens
 

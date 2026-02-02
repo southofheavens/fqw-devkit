@@ -6,7 +6,7 @@
 
 #include <Poco/Net/HTTPServerRequest.h>
 
-namespace FQW::Devkit::Tokens
+namespace RGT::Devkit::Tokens
 {
 
 /**
@@ -41,10 +41,10 @@ Payload extractPayload(const std::string& token);
 // Если в запросе отсутствует заголовок Authorization 
 // или тип токена не Bearer 
 // или токен невалидный (неверная подпись || просрочен),
-// то будет выброшено исключение FQWException
+// то будет выброшено исключение RGTException
 std::string extractTokenFromRequest(Poco::Net::HTTPServerRequest & request);
 
-} // namespace FQW::Devkit::Tokens
+} // namespace RGT::Devkit::Tokens
 
 #endif // __TOKENS_H__
 

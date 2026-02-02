@@ -1,4 +1,4 @@
-project('fqw-devkit', 'cpp',
+project('rgt-devkit', 'cpp',
   default_options: [
     'cpp_std=c++20'
   ]
@@ -13,10 +13,10 @@ poco_json = cpp.find_library('PocoJSON', required: true)
 poco_jwt = cpp.find_library('PocoJWT', required: true)
 poco_net = cpp.find_library('PocoNet', required: true)
 
-inc = include_directories('lib', 'lib/fqw/devkit')
+inc = include_directories('lib')
 sources = files(
-  'lib/fqw/devkit/Tokens.cpp',
-  'lib/fqw/devkit/General.cpp'
+  'lib/rgt/devkit/Tokens.cpp',
+  'lib/rgt/devkit/General.cpp'
 )
 
 all_deps = [
